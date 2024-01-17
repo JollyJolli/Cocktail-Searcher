@@ -1,3 +1,9 @@
+document.addEventListener("DOMContentLoaded", function () {
+    // Esconde la pantalla de carga cuando se carga completamente la página
+    document.querySelector(".loader-wrapper").style.display = "none";
+});
+
+
 function buscarCocktail() {
     var input = document.getElementById('searchInput').value;
 
