@@ -27,6 +27,10 @@
     <title>Cocktail Searcher</title>
 </head>
 <body>
+    <div class="loader-wrapper">
+        <div class="loader"></div>
+    </div>
+    
     <div class="search-container">
         <input type="text" id="searchInput" placeholder="Buscar cóctel por nombre o ID" onkeydown="if(event.key === 'Enter') buscarCocktail()">
         <button onclick="buscarCocktail()">Buscar</button>
