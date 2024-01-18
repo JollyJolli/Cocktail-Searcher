@@ -1,8 +1,16 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Esconde la pantalla de carga cuando se carga completamente la página
-    document.querySelector(".loader-wrapper").style.display = "none";
-});
+    // Muestra la pantalla de carga
+    var loaderWrapper = document.querySelector(".loader-wrapper");
+    loaderWrapper.style.display = "flex"; // Asegurémonos de que esté visible
 
+    // Genera un tiempo aleatorio entre 1000 (1 segundo) y 4000 (4 segundos)
+    var tiempoAleatorio = Math.floor(Math.random() * (4000 - 1000 + 1)) + 1000;
+
+    // Oculta la pantalla de carga después del tiempo aleatorio
+    setTimeout(function () {
+        loaderWrapper.style.display = "none";
+    }, tiempoAleatorio);
+});
 
 function buscarCocktail() {
     var input = document.getElementById('searchInput').value;
