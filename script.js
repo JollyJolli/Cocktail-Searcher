@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Muestra la pantalla de carga
     var loaderWrapper = document.querySelector(".loader-wrapper");
     loaderWrapper.style.display = "flex"; // Asegurémonos de que esté visible
-    var tiempoAleatorio = Math.floor(Math.random() * (7000 - 4000 + 1)) + 1000;
+    var tiempoAleatorio = Math.floor(Math.random() * (6000 - 4000 + 1)) + 1000;
     setTimeout(function () {
         loaderWrapper.style.display = "none";
     }, tiempoAleatorio);
