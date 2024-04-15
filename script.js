@@ -173,12 +173,13 @@ function mostrarCocktail(cocktail) {
         <img src="${cocktail.strDrinkThumb}" alt="${cocktail.strDrink}">
         <h3>${cocktail.strDrink}</h3>
         <p>${cocktail.strCategory}</p>
-        <button onclick="mostrarPopOut(${cocktail.idDrink})">Detalles</button>
+        <button onclick="mostrarPopOutDetalles(${cocktail.idDrink})">Detalles</button>
     `;
 
     // Agregar la tarjeta al contenedor de resultados
     resultsContainer.appendChild(cocktailCard);
 }
+
 
 function mostrarPopOut(idDrink) {
     // Obtener el contenedor del pop-out
