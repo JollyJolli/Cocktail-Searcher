@@ -98,11 +98,10 @@ function mostrarResultados(cocteles) {
     });
 }
 
-// ... (código anterior)
-
-function mostrarPopOut(idDrink) {
-    // Obtener el contenedor del pop-out y el contenido del pop-out
+function mostrarPopOutDetalles(idDrink) {
+    // Obtener el contenedor del pop-out
     const popOutContainer = document.getElementById("popOut");
+    // Obtener el contenido del pop-out
     const popOutContent = document.getElementById("popOutContent");
 
     // Limpiar el contenido previo
@@ -119,7 +118,6 @@ function mostrarPopOut(idDrink) {
                 // Mostrar la información en el pop-out
                 const cocktailDetails = data.drinks[0];
                 popOutContent.innerHTML = `
-                    <span class="close-btn" onclick="cerrarPopOut()">&times;</span>
                     <img src="${cocktailDetails.strDrinkThumb}" alt="${cocktailDetails.strDrink}">
                     <h3>${cocktailDetails.strDrink}</h3>
                     <p>${cocktailDetails.strCategory}</p>
@@ -131,7 +129,7 @@ function mostrarPopOut(idDrink) {
             }
 
             // Mostrar el pop-out
-            popOutContainer.style.display = "flex";
+            popOutContainer.style.display = "block";
         })
         .catch(error => console.error("Error al obtener detalles del cóctel:", error));
 }
