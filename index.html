@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <script src="https://kit.fontawesome.com/bc3d0bf176.js" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Encuentra y descubre deliciosos cócteles con Cocktail Searcher">
@@ -28,9 +29,12 @@
 </head>
 <body>
     
-    <div class="loader-wrapper">
-        <div class="loader"></div>
-    </div>
+  <div class="loader-wrapper">
+      <div class="loader">
+          <i class="fas fa-cocktail fa-spin"></i> <!-- Icono animado de cóctel -->
+      </div>
+  </div>
+  <body onload="showNewDesign(); generateFlag()">
     
     <div class="search-container">
         <input type="text" id="searchInput" placeholder="Buscar cóctel por nombre o ID" onkeydown="if(event.key === 'Enter') buscarCocktail()">
@@ -45,7 +49,7 @@
     </div>
 
     <footer>
-        <p>&#169;2023 Made by <span class="brand-highlight">Formen</span></p>
+        <p>&#169;2024 Made by <span class="brand-highlight">Formen</span></p>
     </footer>
 
     <script src="https://rawgit.com/WeiChiaChang/Easter-egg/master/easter-eggs-collection.js"></script>
