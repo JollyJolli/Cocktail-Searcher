@@ -36,7 +36,7 @@ function buscarCocktail() {
 }
 
 function mostrarResultados(cocteles) {
-    var resultsContainer = document.getElementById('results');
+    const resultsContainer = document.getElementById('results');
     resultsContainer.innerHTML = ""; // Limpiar resultados anteriores
 
     // Verificar si se encontraron resultados
@@ -47,56 +47,26 @@ function mostrarResultados(cocteles) {
 
     // Crear tarjetas para cada cóctel
     cocteles.forEach(coctel => {
-        var card = document.createElement('div');
-        card.classList.add('cocktail-card');
-
-        var img = document.createElement('img');
-        img.src = coctel.strDrinkThumb;
-        img.alt = coctel.strDrink;
-
-        var title = document.createElement('h2');
-        title.textContent = coctel.strDrink;
-
-        var id = document.createElement('p');
-        id.textContent = 'ID: ' + coctel.idDrink;
-
-        var category = document.createElement('p');
-        category.textContent = 'Categoría: ' + coctel.strCategory;
-
-        var glass = document.createElement('p');
-        glass.textContent = 'Vaso: ' + coctel.strGlass;
-
-        var instructions = document.createElement('p');
-        instructions.textContent = 'Instrucciones: ' + coctel.strInstructions;
-
-        var ingredientsTitle = document.createElement('h3');
-        ingredientsTitle.textContent = 'Ingredientes:';
-
-        var ingredientsList = document.createElement('ul');
-        // Agregar ingredientes a la lista
-        for (let i = 1; i <= 15; i++) {
-            var ingredient = coctel['strIngredient' + i];
-            var measure = coctel['strMeasure' + i];
-
-            if (ingredient && measure) {
-                var listItem = document.createElement('li');
-                listItem.textContent = measure + ' ' + ingredient;
-                ingredientsList.appendChild(listItem);
-            }
-        }
-
-        card.appendChild(img);
-        card.appendChild(title);
-        card.appendChild(id);
-        card.appendChild(category);
-        card.appendChild(glass);
-        card.appendChild(instructions);
-        card.appendChild(ingredientsTitle);
-        card.appendChild(ingredientsList);
-
+        const card = document.createElement('div');
+        card.className = 'cocktail-card';
+        card.innerHTML = `
+            <img src="${coctel.strDrinkThumb}" alt="${coctel.strDrink}">
+            <h3>${coctel.strDrink}</h3>
+            <div class="cocktail-details">
+                <h3>Detalles:</h3>
+                <p><strong>Categoría:</strong> ${coctel.strCategory}</p>
+                <p><strong>Vaso:</strong> ${coctel.strGlass}</p>
+                <p><strong>Instrucciones:</strong> ${coctel.strInstructions}</p>
+                <h3>Ingredientes:</h3>
+                <ul>
+                    ${mostrarIngredientes(coctel)}
+                </ul>
+            </div>
+        `;
         resultsContainer.appendChild(card);
     });
 }
+
 
 function mostrarPopOutDetalles(idDrink) {
     // Obtener el contenedor del pop-out
@@ -120,8 +90,9 @@ function mostrarPopOutDetalles(idDrink) {
                 popOutContent.innerHTML = `
                     <img src="${cocktailDetails.strDrinkThumb}" alt="${cocktailDetails.strDrink}">
                     <h3>${cocktailDetails.strDrink}</h3>
-                    <p>${cocktailDetails.strCategory}</p>
-                    <p>${cocktailDetails.strInstructions}</p>
+                    <p>Categoría: ${cocktailDetails.strCategory}</p>
+                    <p>Instrucciones: ${cocktailDetails.strInstructions}</p>
+                    <h4>Ingredientes:</h4>
                     <ul>
                         ${mostrarIngredientes(cocktailDetails)}
                     </ul>
@@ -133,7 +104,6 @@ function mostrarPopOutDetalles(idDrink) {
         })
         .catch(error => console.error("Error al obtener detalles del cóctel:", error));
 }
-
 
 function cerrarPopOut() {
     var popOut = document.getElementById('popOut');
@@ -172,56 +142,22 @@ function mostrarCocktail(cocktail) {
     cocktailCard.innerHTML = `
         <img src="${cocktail.strDrinkThumb}" alt="${cocktail.strDrink}">
         <h3>${cocktail.strDrink}</h3>
-        <p>${cocktail.strCategory}</p>
-        <button onclick="mostrarPopOutDetalles(${cocktail.idDrink})">Detalles</button>
+        <div class="cocktail-details">
+            <h3>Detalles:</h3>
+            <p><strong>Categoría:</strong> ${cocktail.strCategory}</p>
+            <p><strong>Vaso:</strong> ${cocktail.strGlass}</p>
+            <p><strong>Instrucciones:</strong> ${cocktail.strInstructions}</p>
+            <h3>Ingredientes:</h3>
+            <ul>
+                ${mostrarIngredientes(cocktail)}
+            </ul>
+        </div>
     `;
 
     // Agregar la tarjeta al contenedor de resultados
     resultsContainer.appendChild(cocktailCard);
 }
 
-
-function mostrarPopOut(idDrink) {
-    // Obtener el contenedor del pop-out
-    const popOutContainer = document.getElementById("popOut");
-    // Obtener el contenido del pop-out
-    const popOutContent = document.getElementById("popOutContent");
-
-    // Limpiar el contenido previo
-    popOutContent.innerHTML = "";
-
-    // Realizar una solicitud a la API para obtener detalles por idDrink
-    const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idDrink}`;
-
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            // Verificar si se obtuvo información
-            if (data.drinks && data.drinks.length > 0) {
-                // Mostrar la información en el pop-out
-                const cocktailDetails = data.drinks[0];
-                popOutContent.innerHTML = `
-                    <img src="${cocktailDetails.strDrinkThumb}" alt="${cocktailDetails.strDrink}">
-                    <h3>${cocktailDetails.strDrink}</h3>
-                    <p>${cocktailDetails.strCategory}</p>
-                    <p>${cocktailDetails.strInstructions}</p>
-                    <ul>
-                        ${mostrarIngredientes(cocktailDetails)}
-                    </ul>
-                `;
-            }
-
-            // Mostrar el pop-out
-            popOutContainer.style.display = "block";
-        })
-        .catch(error => console.error("Error al obtener detalles del cóctel:", error));
-}
-
-function cerrarPopOut() {
-    // Ocultar el pop-out al hacer clic en el botón "Cerrar"
-    const popOutContainer = document.getElementById("popOut");
-    popOutContainer.style.display = "none";
-}
 
 function mostrarIngredientes(cocktail) {
     // Crear una lista de ingredientes y medidas
@@ -236,22 +172,4 @@ function mostrarIngredientes(cocktail) {
     }
 
     return ingredientesHTML;
-}
-
-function crearCard(cocktail) {
-    const cardContainer = document.getElementById("cardContainer");
-
-    // Crear la card
-    const card = document.createElement("div");
-    card.className = "card";
-
-    // Contenido de la card
-    card.innerHTML = `
-        <img src="${cocktail.strDrinkThumb}" alt="${cocktail.strDrink}">
-        <h3>${cocktail.strDrink}</h3>
-        <button onclick="mostrarPopOut('${cocktail.idDrink}')">Detalles</button>
-    `;
-
-    // Agregar la card al contenedor
-    cardContainer.appendChild(card);
 }
