@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     // Load favorites on startup
     loadFavorites();
-    fetchCocktails();
+    fetchRandomCocktails(); // Fetch random cocktails instead of all
 });
 
 function showLoader() {
@@ -18,8 +18,9 @@ function displayError(message) {
     hideLoader(); // Hide loader in case of error
 }
 
-function fetchCocktails() {
-    const url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s="; // Base API URL
+function fetchRandomCocktails() {
+    const randomLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26)); // Random letter A-Z
+    const url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${randomLetter}`; // Use letter to fetch cocktails
     showLoader(); // Show loader before fetching
     fetch(url)
         .then(response => {
@@ -54,6 +55,7 @@ function displayResults(drinks) {
                 <h3>${drink.strDrink}</h3>
                 <div class="cocktail-details">
                     <button onclick="showPopOutDetails('${drink.idDrink}')"><i class="fas fa-info-circle"></i> Details</button>
+                    <button onclick="addToFavorites('${drink.idDrink}', '${drink.strDrink}', '${drink.strDrinkThumb}')"><i class="fas fa-heart"></i> Favorite</button>
                 </div>
             `;
             resultsContainer.appendChild(card);
@@ -61,6 +63,52 @@ function displayResults(drinks) {
     } else {
         displayError("No cocktails found.");
     }
+}
+
+function addToFavorites(idDrink, strDrink, strDrinkThumb) {
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    
+    // Check if the drink is already a favorite
+    if (!favorites.find(fav => fav.idDrink === idDrink)) {
+        favorites.push({ idDrink, strDrink, strDrinkThumb });
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+        loadFavorites(); // Reload favorites to display updated list
+        alert(`${strDrink} has been added to favorites!`);
+    } else {
+        alert(`${strDrink} is already in favorites.`);
+    }
+}
+
+function loadFavorites() {
+    // Function to load favorite cocktails from local storage (if any)
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    const favoritesContainer = document.getElementById("favorites");
+    favoritesContainer.innerHTML = ""; // Clear previous favorites
+    
+    if (favorites.length > 0) {
+        favorites.forEach(drink => {
+            const card = document.createElement("div");
+            card.classList.add("cocktail-card");
+            card.innerHTML = `
+                <img src="${drink.strDrinkThumb}" alt="${drink.strDrink}">
+                <h3>${drink.strDrink}</h3>
+                <div class="cocktail-details">
+                    <button onclick="showPopOutDetails('${drink.idDrink}')"><i class="fas fa-info-circle"></i> Details</button>
+                    <button onclick="removeFromFavorites('${drink.idDrink}')"><i class="fas fa-trash-alt"></i> Remove</button>
+                </div>
+            `;
+            favoritesContainer.appendChild(card);
+        });
+    } else {
+        favoritesContainer.innerHTML = "<p>No favorites found.</p>";
+    }
+}
+
+function removeFromFavorites(idDrink) {
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    const updatedFavorites = favorites.filter(fav => fav.idDrink !== idDrink);
+    localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+    loadFavorites(); // Reload favorites to display updated list
 }
 
 function searchCocktail() {
@@ -87,7 +135,7 @@ function searchCocktail() {
                 displayError("Failed to search cocktails. Please try again later.");
             });
     } else {
-        fetchCocktails(); // If no search, show all cocktails
+        fetchRandomCocktails(); // If no search, show random cocktails
     }
 }
 
@@ -113,42 +161,25 @@ function showPopOutDetails(idDrink) {
             return response.json();
         })
         .then(data => {
-            if (data.drinks && data.drinks.length > 0) {
-                const cocktail = data.drinks[0];
-                const popOutContent = document.getElementById("popOutContent");
-                popOutContent.innerHTML = `
-                    <h3>${cocktail.strDrink}</h3>
-                    <img src="${cocktail.strDrinkThumb}" alt="${cocktail.strDrink}">
-                    <p><strong>Category:</strong> ${cocktail.strCategory}</p>
-                    <p><strong>Glass:</strong> ${cocktail.strGlass}</p>
-                    <p><strong>Instructions:</strong> ${cocktail.strInstructions}</p>
-                    <h3>Ingredients:</h3>
-                    <ul>${displayIngredients(cocktail)}</ul>
-                `;
-                document.getElementById("popOut").classList.add('show'); // Show pop-out with animation
-            } else {
-                displayError("Cocktail details not found.");
-            }
+            const cocktail = data.drinks[0];
+            const ingredients = displayIngredients(cocktail);
+            const popOutContent = `
+                <h3>${cocktail.strDrink}</h3>
+                <img src="${cocktail.strDrinkThumb}" alt="${cocktail.strDrink}">
+                <h4>Ingredients:</h4>
+                <ul>${ingredients}</ul>
+                <h4>Instructions:</h4>
+                <p>${cocktail.strInstructions}</p>
+            `;
+            document.getElementById('popOutContent').innerHTML = popOutContent;
+            document.getElementById('popOut').style.display = 'flex'; // Show pop-out
         })
         .catch(error => {
-            console.error("Error displaying cocktail details:", error);
+            console.error("Error fetching cocktail details:", error);
             displayError("Failed to load cocktail details. Please try again later.");
         });
 }
 
 function closePopOut() {
-    document.getElementById("popOut").classList.remove('show'); // Hide pop-out with animation
-    setTimeout(() => {
-        document.getElementById("popOutContent").innerHTML = ''; // Clear content
-    }, 300); // Duration of the animation
-}
-
-function loadFavorites() {
-    // Function to load favorite cocktails from local storage (if any)
-    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-    if (favorites.length > 0) {
-        displayResults(favorites); // Show favorites if they exist
-    } else {
-        displayError("No favorites found.");
-    }
+    document.getElementById('popOut').style.display = 'none'; // Hide pop-out
 }

@@ -160,3 +160,11 @@ footer {
     color: #ff6b6b;
     font-size: 2rem;
 }
+
+.separator {
+    border: none; /* Remove the default border */
+    height: 2px; /* Height of the line */
+    background-color: #ff6b6b; /* Color of the line */
+    margin: 20px 0; /* Spacing above and below the line */
+}
+
