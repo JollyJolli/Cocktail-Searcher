@@ -1,59 +1,54 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8W9Q7QHS21"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-8W9Q7QHS21');
-  </script>
-  <script src="https://kit.fontawesome.com/bc3d0bf176.js" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Encuentra y descubre deliciosos cócteles con Cocktail Searcher">
-    <meta name="keywords" content="cócteles, bebidas, recetas, bar, Cocktail Searcher">
+    <meta name="description" content="Find and discover delicious cocktails with Cocktail Searcher">
+    <meta name="keywords" content="cocktails, drinks, recipes, bar, Cocktail Searcher">
     <meta name="author" content="Formen">
 
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Cocktail Searcher">
-    <meta property="og:description" content="Encuentra y descubre deliciosos cócteles con Cocktail Searcher">
+    <meta property="og:description" content="Find and discover delicious cocktails with Cocktail Searcher">
     <meta property="og:image" content="https://www.thecocktaildb.com/images/media/drink/y36z8c1503563911.jpg">
     <meta property="og:url" content="cocktails.formen.cc">
     <meta property="og:type" content="website">
-    <meta property="og:locale" content="es_ES">
+    <meta property="og:locale" content="en_US">
 
     <!-- Twitter Meta Tags -->
     <meta name="twitter:card" content="https://www.thecocktaildb.com/images/media/drink/y36z8c1503563911.jpg">
     <meta name="twitter:title" content="Cocktail Searcher">
-    <meta name="twitter:description" content="Encuentra y descubre deliciosos cócteles con Cocktail Searcher">
+    <meta name="twitter:description" content="Find and discover delicious cocktails with Cocktail Searcher">
     <meta name="twitter:image" content="https://www.thecocktaildb.com/images/media/drink/9koz3f1643821062.jpg">
 
     <link rel="stylesheet" href="styles.css">
+    <script src="https://kit.fontawesome.com/bc3d0bf176.js" crossorigin="anonymous"></script>
     <script defer src="script.js"></script>
 
     <title>Cocktail Searcher</title>
 </head>
-<body>
-    
-  <div class="loader-wrapper">
-      <div class="loader">
-          <i class="fas fa-cocktail fa-spin"></i> <!-- Icono animado de cóctel -->
-      </div>
-  </div>
-  <body onload="showNewDesign(); generateFlag()">
-    
+<body onload="showLoader()">
+    <div class="loader-wrapper" id="loader">
+        <div class="loader">
+            <i class="fas fa-cocktail fa-spin"></i> <!-- Animated cocktail icon -->
+        </div>
+    </div>
+
+    <header>
+        <h1>Cocktail Searcher</h1>
+        <h2>Discover Your Favorite Cocktail</h2>
+    </header>
+
     <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Buscar cóctel por nombre o ID" onkeydown="if(event.key === 'Enter') buscarCocktail()">
-        <button onclick="buscarCocktail()">Buscar</button>
+        <input type="text" id="searchInput" placeholder="Search cocktail by name or ID" onkeydown="if(event.key === 'Enter') searchCocktail()">
+        <button onclick="searchCocktail()"><i class="fas fa-search"></i> Search</button>
     </div>
 
     <div id="results" class="results-container"></div>
 
     <div id="popOut" class="pop-out-container">
         <div class="pop-out-content" id="popOutContent"></div>
-        <button onclick="cerrarPopOut()">Cerrar</button>
+        <button onclick="closePopOut()" class="close-button"><i class="fas fa-times"></i> Close</button>
     </div>
 
     <footer>
@@ -61,6 +56,5 @@
     </footer>
 
     <script src="https://rawgit.com/WeiChiaChang/Easter-egg/master/easter-eggs-collection.js"></script>
-    <script src="script.js"></script>
 </body>
 </html>

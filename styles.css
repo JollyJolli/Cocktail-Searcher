@@ -1,65 +1,82 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #1a1a1a;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #2b3d5d, #1a1a1a);
     color: #fff;
+    line-height: 1.6;
+}
+
+header {
+    text-align: center;
+    margin: 20px 0;
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+h2 {
+    font-size: 1.5rem;
 }
 
 .search-container {
-    text-align: center;
-    padding: 20px;
+    display: flex;
+    justify-content: center;
+    margin: 20px;
 }
 
-#searchInput {
+input[type="text"] {
     padding: 10px;
-    font-size: 16px;
-    border: 2px solid #6a5acd;
-    border-radius: 8px;
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #fff;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    width: 300px;
 }
 
 button {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #6a5acd;
-    color: #fff;
+    padding: 10px;
     border: none;
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
+    background: #ff6b6b;
+    color: #fff;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
 }
 
 button:hover {
-    background-color: #4b0082;
+    background: #ff3b3b;
 }
 
 .results-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
     padding: 20px;
 }
 
 .cocktail-card {
-    background-color: #333;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin: 15px;
-    padding: 20px;
-    border-radius: 8px;
-    transition: transform 0.3s ease-in-out;
+    background: #374a70;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s;
 }
 
 .cocktail-card:hover {
     transform: scale(1.05);
-    cursor: pointer;
 }
 
 .cocktail-card img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
+    width: 100%;
+    border-bottom: 2px solid #ff6b6b;
+}
+
+.cocktail-card h3 {
+    padding: 10px;
+    text-align: center;
 }
 
 .pop-out-container {
@@ -67,287 +84,79 @@ button:hover {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-.pop-out-content {
-    background-color: #333;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    padding: 20px;
-    max-width: 600px;
-    width: 100%;
-    text-align: center;
-}
-
-.pop-out-content img {
-    max-width: 100%;
-    border-radius: 8px;
-}
-
-.pop-out-content p {
-    margin: 10px 0;
-}
-
-.pop-out-content button {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #6a5acd;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
-}
-
-.pop-out-content button:hover {
-    background-color: #4b0082;
-}
-
-footer {
-    text-align: center;
-    padding: 10px;
-    background-color: #1a1a1a;
-    color: #fff;
-}
-
-.brand-highlight {
-    color: #6a5acd;
-}
-
-.loader-wrapper {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.9);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-}
-
-.loader {
-    font-size: 40px; /* Tamaño del icono */
-    color: #6a5acd; /* Color del icono */
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.cocktail-details {
-    padding: 10px;
-    background-color: #444;
-    border-radius: 8px;
-    margin-top: 10px;
-}
-
-.cocktail-details h3 {
-    color: #6a5acd;
-    margin-top: 0;
-}
-
-.cocktail-details p {
-    margin: 5px 0;
-}body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #1a1a1a;
-    color: #fff;
-}
-
-.search-container {
-    text-align: center;
-    padding: 20px;
-}
-
-#searchInput {
-    padding: 10px;
-    font-size: 16px;
-}
-
-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #6a5acd;
-    color: #fff;
-    border: none;
-}
-
-button:hover {
-    background-color: #4b0082;
-}
-
-.results-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    padding: 20px;
-}
-
-.cocktail-card {
-    background-color: #333;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin: 15px;
-    padding: 20px;
-    border-radius: 8px;
-    transition: transform 0.3s ease-in-out;
-}
-
-.cocktail-card:hover {
-    transform: scale(1.05);
-    cursor: pointer;
-}
-
-.cocktail-card img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-}
-
-.pop-out-container {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-.pop-out-content {
-    background-color: #333;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    padding: 20px;
-    max-width: 600px;
-    width: 100%;
-    text-align: center;
-}
-
-.pop-out-content img {
-    max-width: 100%;
-    border-radius: 8px;
-}
-
-.pop-out-content p {
-    margin: 10px 0;
-}
-
-.pop-out-content button {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #6a5acd;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-}
-
-.pop-out-content button:hover {
-    background-color: #4b0082;
-}
-
-
-footer {
-    text-align: center;
-    padding: 10px;
-    background-color: #1a1a1a;
-    color: #fff;
-}
-
-.brand-highlight {
-    color: #6a5acd;
-}
-
-/* Estilo para el pop-out */
-#popOut {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    right: 0;
+    bottom: 0;
     background: rgba(0, 0, 0, 0.8);
     justify-content: center;
     align-items: center;
+    z-index: 1000;
+    overflow-y: auto; /* Enable scrolling in the pop-up */
+}
+
+.pop-out-container.show {
+    display: flex;
 }
 
 .pop-out-content {
-    max-width: 80%;
-    background: #fff;
+    background: #2b3d5d;
+    border-radius: 10px;
     padding: 20px;
-    border-radius: 8px;
-    text-align: left; /* Alineación a la izquierda del contenido */
+    width: 90%;
+    max-width: 600px;
+    margin: auto;
     position: relative;
 }
 
-/* Botón para cerrar el pop-out */
-.close-btn {
+.pop-out-content h3 {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.pop-out-content img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.close-button {
+    background: #ff6b6b;
+    border: none;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
     position: absolute;
     top: 10px;
     right: 10px;
-    cursor: pointer;
-    font-size: 18px;
-    color: #333;
 }
 
-.card {
-    width: calc(33.33% - 20px); /* Ajustar el ancho para que entren 3 horizontalmente con márgenes */
-    margin: 10px;
-    overflow: hidden; /* Evitar que el contenido se desborde */
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out;
+.close-button:hover {
+    background: #ff3b3b;
 }
 
-.card img {
-    max-width: 100%; /* Hacer que la imagen tenga un tamaño máximo del 100% del contenedor */
-    height: auto; /* Mantener la proporción de aspecto original */
+footer {
+    text-align: center;
+    padding: 20px 0;
 }
 
-.card:hover {
-    transform: scale(1.05); /* Efecto de escala al pasar el mouse */
+.brand-highlight {
+    color: #ff6b6b;
 }
 
-/* LOADER */
 .loader-wrapper {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.9); /* Fondo semi-transparente para mostrar que está cargando */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-        }
+    display: none; /* Initially hide the loader */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
 
-        .loader {
-            border: 8px solid #f3f3f3; /* Light grey */
-            border-top: 8px solid #3498db; /* Blue */
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-/* LOADER */
+.loader {
+    color: #ff6b6b;
+    font-size: 2rem;
+}
